@@ -12,7 +12,6 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(repairsController.findAllRepairs)
   .post(
     authMiddleware.protect,
     validationMiddleware.createRepairsValidation,
@@ -20,24 +19,21 @@ router
   );
 
 router.use(authMiddleware.protect); //para saber que se loggio
-/* 
-router.get('/me', postController.findMyPosts);
 
-router.get(
-  '/profile/:id',
-  userMiddleware.validUser,
-  postController.findUserPosts
-);
-*/
+router.use(repairsMiddleware.validEmployeeUser);
+
+router.route('/').get(repairsController.findAllRepairs);
+
 router
-  .use('/:id', repairsMiddleware.validRepairs) //para ver si existe y ponerlo en la req
   .route('/:id')
-  .get(repairsController.findOneRepairs)
-  .patch(
-    validationMiddleware.createRepairsValidation,
-    authMiddleware.protectAccountOwner,
-    repairsController.updateRepairs
-  )
-  .delete(authMiddleware.protectAccountOwner, repairsController.deleteRepairs);
+  .get(repairsMiddleware.validRepairsId, repairsController.findOneRepairs)
+  .patch(repairsMiddleware.validRepairsId, repairsController.updateRepairs);
+
+router
+  .route('/:id')
+  .delete(
+    repairsMiddleware.validRepairsCompleted,
+    repairsController.deleteRepairs
+  );
 
 module.exports = router;

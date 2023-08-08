@@ -39,8 +39,6 @@ exports.createUserValidation = [
   validFields,
 ];
 
-//body('description').notEmpty().withMessage('Description is required'),
-
 exports.loginUserValidation = [
   body('email')
     .notEmpty()
@@ -54,34 +52,10 @@ exports.loginUserValidation = [
     .withMessage('Password must have cotain a least one letter'),
   validFields,
 ];
-/* 
-exports.updatePasswordValidation = [
-  body('currentPassword')
-    .isLength({ min: 8 })
-    .withMessage('Password must have a least 8 characters')
-    .matches(/[a-zA-Z]/)
-    .withMessage('Password must have cotain a least one letter'),
-  body('newPassword')
-    .isLength({ min: 8 })
-    .withMessage('Password must have a least 8 characters')
-    .matches(/[a-zA-Z]/)
-    .withMessage('Password must have cotain a least one letter'),
-  validFields,
-];
-*/
-exports.createRepairsValidation = [
-  body('title').notEmpty().withMessage('Title is required'),
-  body('content').notEmpty().withMessage('Content is required'),
-  validFields,
-];
-/* 
-exports.createCommentValidation = [
-  body('text').notEmpty().withMessage('Text is required'),
-  body('postId').notEmpty().withMessage('PostId is required'),
-  validFields,
-];
 
-exports.updateCommentValidation = [
-  body('text').notEmpty().withMessage('Text is required'),
+exports.createRepairsValidation = [
+  body('date').notEmpty().withMessage('Date is required'),
+  body('motorsNumber').notEmpty().withMessage('motorsNumber is required'),
+  body('description').notEmpty().withMessage('description is required'),
   validFields,
-];*/
+];

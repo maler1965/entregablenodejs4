@@ -8,7 +8,7 @@ const User = require('../models/user.model');
 exports.findAllRepairs = catchAsync(async (req, res, next) => {
   const repairs = await Repairs.findAll({
     where: {
-      status: repairsStatus.active,
+      status: repairsStatus.pending,
     },
     attributes: {
       exclude: ['status', 'userId'], //para anular lo que no queremos enviar al front end
@@ -16,11 +16,11 @@ exports.findAllRepairs = catchAsync(async (req, res, next) => {
     include: [
       {
         model: User, //se pone el nombre del modelo primero
-        attributes: ['id', 'name', 'profileImgUrl', 'description'],
+        attributes: ['id', 'name'],
       },
     ],
     order: [['createdAt', 'DESC']], //para que muestre la informacion de madera descendente, por orden de creacion
-    limit: 10, //limita a los ultimos 10 comentario
+    limit: 10, //limita a los ultimos 10
   });
 
   return res.status(200).json({
@@ -31,10 +31,16 @@ exports.findAllRepairs = catchAsync(async (req, res, next) => {
 });
 
 exports.createRepairs = catchAsync(async (req, res, next) => {
-  const { title, content } = req.body;
-  const { id: userId } = req.sessionUser;
+  const { date, motorsNumber, description } = req.body;
+  const user = req.sessionUser;
+  const userId = user.id;
 
-  const repairs = await Repairs.create({ title, content, userId });
+  const repairs = await Repairs.create({
+    date,
+    motorsNumber,
+    description,
+    userId,
+  });
 
   return res.status(201).json({
     status: 'success',
@@ -54,9 +60,10 @@ exports.findOneRepairs = catchAsync(async (req, res, next) => {
 
 exports.updateRepairs = catchAsync(async (req, res, next) => {
   const { repairs } = req;
-  const { title, content } = req.body;
 
-  await repairs.update({ title, content });
+  const status = repairsStatus.completed;
+
+  await repairs.update({ status });
 
   return res.status(200).json({
     status: 'success',
@@ -67,7 +74,7 @@ exports.updateRepairs = catchAsync(async (req, res, next) => {
 exports.deleteRepairs = catchAsync(async (req, res, next) => {
   const { repairs } = req;
 
-  await repairs.update({ status: repairsStatus.disabled });
+  await repairs.update({ status: repairsStatus.cancelled });
 
   return res.status(200).json({
     status: 'success',

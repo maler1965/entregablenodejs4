@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../database/config');
 
-const Repairs = db.define('repair', {
+const Repairs = db.define('repairN', {
   id: {
     primaryKey: true,
     allowNull: false,
@@ -9,7 +9,7 @@ const Repairs = db.define('repair', {
     type: DataTypes.INTEGER,
   },
   date: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   motorsNumber: {
@@ -32,8 +32,9 @@ const Repairs = db.define('repair', {
 });
 
 const repairsStatus = Object.freeze({
-  active: 'active',
-  disabled: 'disabled',
+  pending: 'pending',
+  completed: 'completed',
+  cancelled: 'cancelled',
 });
 
 module.exports = { Repairs, repairsStatus };
