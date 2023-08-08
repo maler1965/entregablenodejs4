@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const generateJWT = require('./../utils/jwt');
 const AppError = require('../utils/appError');
 
-exports.signUp = catchAsync(async (req, res, next) => {
+exports.logUp = catchAsync(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
   const salt = await bcrypt.genSalt(12);
@@ -33,7 +33,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.signIn = catchAsync(async (req, res, next) => {
+exports.logIn = catchAsync(async (req, res, next) => {
   //1. traernos la informacion de la req.body
   const { email, password } = req.body;
 
@@ -41,7 +41,7 @@ exports.signIn = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     where: {
       email: email.toLowerCase().trim(),
-      status: 'active',
+      status: 'available',
     },
   });
 
@@ -63,8 +63,6 @@ exports.signIn = catchAsync(async (req, res, next) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      description: user.description,
-      profileImgUrl: user.profileImgUrl,
     },
   });
 });

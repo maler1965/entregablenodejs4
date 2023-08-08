@@ -15,11 +15,11 @@ const validFields = (req, res, next) => {
 
 exports.updateUserValidation = [
   body('name').notEmpty().withMessage('Name is required'),
-  body('description')
+  body('email')
     .notEmpty()
-    .withMessage('Description is required')
-    .isLength({ min: 10 })
-    .withMessage('Description must be at least 10 characters long'),
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a correct format'),
   validFields,
 ];
 
@@ -35,7 +35,7 @@ exports.createUserValidation = [
     .withMessage('Password must have a least 8 characters')
     .matches(/[a-zA-Z]/)
     .withMessage('Password must have cotain a least one letter'),
-  body('role').notEmpty().withMessage('role is required'),
+  body('role').notEmpty().withMessage('role is required, client o employee'),
   validFields,
 ];
 
