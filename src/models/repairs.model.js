@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../database/config');
 
-const Repairs = db.define('repairN', {
+const Repairs = db.define('repair', {
   id: {
     primaryKey: true,
     allowNull: false,

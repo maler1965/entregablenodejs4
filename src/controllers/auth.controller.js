@@ -27,8 +27,6 @@ exports.logUp = catchAsync(async (req, res, next) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      description: user.description,
-      profileImgUrl: user.profileImgUrl,
     },
   });
 });
