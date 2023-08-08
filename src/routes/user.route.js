@@ -14,10 +14,6 @@ router.use(authMiddleware.protect);
 
 router.get('/', userController.findAllUsers);
 
-// router.use('/:id', userMiddleware.validUser);
-
-// router.use(authMiddleware.restrictTo('admin', 'user'));
-
 router
   .use('/:id', userMiddleware.validUser)
   .route('/:id')

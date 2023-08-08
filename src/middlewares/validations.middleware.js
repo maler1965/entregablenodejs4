@@ -54,7 +54,7 @@ exports.loginUserValidation = [
     .withMessage('Password must have cotain a least one letter'),
   validFields,
 ];
-
+/* 
 exports.updatePasswordValidation = [
   body('currentPassword')
     .isLength({ min: 8 })
@@ -68,13 +68,13 @@ exports.updatePasswordValidation = [
     .withMessage('Password must have cotain a least one letter'),
   validFields,
 ];
-
-exports.createPostValidation = [
+*/
+exports.createRepairsValidation = [
   body('title').notEmpty().withMessage('Title is required'),
   body('content').notEmpty().withMessage('Content is required'),
   validFields,
 ];
-
+/* 
 exports.createCommentValidation = [
   body('text').notEmpty().withMessage('Text is required'),
   body('postId').notEmpty().withMessage('PostId is required'),
@@ -84,4 +84,4 @@ exports.createCommentValidation = [
 exports.updateCommentValidation = [
   body('text').notEmpty().withMessage('Text is required'),
   validFields,
-];
+];*/

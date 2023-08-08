@@ -5,8 +5,8 @@ const authController = require('./../controllers/auth.controller');
 
 //middlewares
 const validationMiddleware = require('./../middlewares/validations.middleware');
-const userMiddleware = require('./../middlewares/user.middleware');
-const authMiddleware = require('./../middlewares/auth.middleware');
+//const userMiddleware = require('./../middlewares/user.middleware');
+//const authMiddleware = require('./../middlewares/auth.middleware');
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.post(
   validationMiddleware.loginUserValidation,
   authController.signIn
 );
-
+/* 
 router.use(authMiddleware.protect);
 
 router.patch(
@@ -31,5 +31,5 @@ router.patch(
   authMiddleware.protectAccountOwner,
   authController.updatePassword
 );
-
+*/
 module.exports = router;

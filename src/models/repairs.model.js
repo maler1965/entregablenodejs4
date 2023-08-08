@@ -1,18 +1,22 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../database/config');
 
-const Post = db.define('posts', {
+const Repairs = db.define('repair', {
   id: {
     primaryKey: true,
     allowNull: false,
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
-  title: {
-    type: DataTypes.STRING(150),
+  date: {
+    type: DataTypes.STRING(50),
     allowNull: false,
   },
-  content: {
+  motorsNumber: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  description: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
@@ -21,15 +25,15 @@ const Post = db.define('posts', {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM('active', 'disabled'),
+    type: DataTypes.ENUM('pending', 'completed', 'cancelled'),
     allowNull: false,
-    defaultValue: 'active',
+    defaultValue: 'pending',
   },
 });
 
-const postStatus = Object.freeze({
+const repairsStatus = Object.freeze({
   active: 'active',
   disabled: 'disabled',
 });
 
-module.exports = { Post, postStatus };
+module.exports = { Repairs, repairsStatus };

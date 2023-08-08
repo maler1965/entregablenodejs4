@@ -1,16 +1,16 @@
-const Comment = require('./comment.model');
-const { Post } = require('./post.model');
+//const Comment = require('./comment.model');
+const { Repairs } = require('./repairs.model');
 const User = require('./user.model');
 
 const initModel = () => {
-  User.hasMany(Post, { foreignKey: 'userId' });
-  Post.belongsTo(User, { foreignKey: 'userId' });
+  User.hasMany(Repairs, { foreignKey: 'userId' });
+  Repairs.belongsTo(User, { foreignKey: 'userId' });
 
-  Post.hasMany(Comment);
-  Comment.belongsTo(Post);
+  // Repairs.hasMany(Comment);
+  //Comment.belongsTo(Repairs);
 
-  User.hasMany(Comment);
-  Comment.belongsTo(User);
+  // User.hasMany(Comment);
+  //Comment.belongsTo(User);
 };
 
 module.exports = initModel;
