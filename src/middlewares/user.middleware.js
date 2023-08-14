@@ -3,13 +3,27 @@ const User = require('../models/user.model');
 const catchAsync = require('../utils/catchAsync');
 
 exports.validUser = catchAsync(async (req, res, next) => {
-  //1. traer el id de la req.params, este es el id del usuario
+  //1. traer el id de la req.params, este es el id introducido por el usuario
   const { id } = req.params;
+  const idUser = parseInt(id, 10);
+
+  const userSession = req.sessionUser;
+  const idSessionUser = userSession.id; //id que viene del token
+
+  if (idUser !== idSessionUser) {
+    //verifica que el id introducido sea del dueno de la cuenta
+    return next(
+      new AppError(
+        `This id: ${id} does not belong to the owner of the account`,
+        404
+      )
+    );
+  }
 
   //2. buscar el usuario con status active y el id recibido
   const user = await User.findOne({
     where: {
-      id,
+      id: idSessionUser,
       status: 'available',
     },
   });

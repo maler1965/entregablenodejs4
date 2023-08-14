@@ -1,6 +1,5 @@
 const catchAsync = require('../utils/catchAsync');
-
-const { db } = require('../database/config');
+const { Op } = require('sequelize');
 
 const { Repairs, repairsStatus } = require('../models/repairs.model');
 const User = require('../models/user.model');
@@ -8,15 +7,19 @@ const User = require('../models/user.model');
 exports.findAllRepairs = catchAsync(async (req, res, next) => {
   const repairs = await Repairs.findAll({
     where: {
-      status: repairsStatus.pending,
+      status: {
+        [Op.in]: [repairsStatus.pending, repairsStatus.completed], //para escoger los que estan pendientes y los completos a la vez
+      },
     },
     attributes: {
-      exclude: ['status', 'userId'], //para anular lo que no queremos enviar al front end
+      exclude: ['userId'], //se quito de aqui el status, para que si sea incluido en la respuesta y pueda saber cual es pendiente y cual es completo
     },
     include: [
       {
-        model: User, //se pone el nombre del modelo primero
-        attributes: ['id', 'name'],
+        model: User,
+        attributes: {
+          exclude: ['password'], //Se redujo lo que se excluye para que envie todo, menos la contrasena
+        },
       },
     ],
     order: [['createdAt', 'DESC']], //para que muestre la informacion de madera descendente, por orden de creacion

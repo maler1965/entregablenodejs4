@@ -15,7 +15,7 @@ router.use(authMiddleware.protect);
 router.get('/', userController.findAllUsers);
 
 router
-  .use('/:id', userMiddleware.validUser)
+  .use('/:id', userMiddleware.validUser) //se añadio verificacion para ver si es el dueño de la cuenta, solo el puede hacer cambios en las siguientes rutas
   .route('/:id')
   .get(userController.findOneUser)
   .patch(validationMiddleware.updateUserValidation, userController.updateUser)

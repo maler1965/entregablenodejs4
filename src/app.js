@@ -9,7 +9,6 @@ const globalErrorHander = require('./controllers/error.controller');
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const repairsRoutes = require('./routes/repairsroute');
-//const commentRoutes = require('./routes/comment.route');
 
 const app = express();
 
@@ -24,7 +23,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/repairs', repairsRoutes);
-//app.use('/api/v1/comments', commentRoutes);
 
 app.all('*', (req, res, next) => {
   return next(
